@@ -1,0 +1,43 @@
+server:
+  port: 3002
+
+spring:
+  profiles:
+    active: dev # Default profile, can be overridden
+  r2dbc:
+    url: r2dbc:mysql://${DB_HOST}:${DB_PORT}/USERS
+    host: ${DB_HOST}
+    port: ${DB_PORT}
+    scheme: USERS
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}  # if using no password, this will be an empty string
+  flyway:
+    enabled: false
+
+twilio:
+  accountSid: ${TWILIO_ACCOUNT_SID}
+  authToken: ${TWILIO_AUTH_TOKEN}
+  messagingServiceSid: ${TWILIO_MESSAGING_SERVICE_SID}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      userService:
+        ring-buffer-size-in-closed-state: 5
+        ring-buffer-size-in-half-open-state: 3
+        wait-duration-in-open-state: 10000  # in milliseconds
+  retry:
+    instances:
+      userService:
+        max-attempts: 3
+        wait-duration: 1000ms
+
+user-service:
+  base-url: ${USER_SERVICE_BASE_URL}  # Change to the actual User Service URL
+  username: ${USER_SERVICE_USERNAME}
+  password: ${USER_SERVICE_PASSWORD}
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG

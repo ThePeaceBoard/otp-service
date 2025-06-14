@@ -1,0 +1,6 @@
+CREATE TABLE OTP (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(255) NOT NULL,
+    otp_code VARCHAR(6) NOT NULL,
+    expiration_time TIMESTAMP NOT NULL
+);
